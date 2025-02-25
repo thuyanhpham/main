@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Đăng nhập</title>
+
+</head>
+
+<body>
+
+	<h2>Đăng ký</h2>
+	<input type="text" id="registerUsername" placeholder="Tên đăng nhập">
+	<input type="password" id="registerPasswprd" placeholder="Mật khẩu">
+	<button onclick="register()">Đăng ký</button>
+	
+	<h2>Đăng nhập</h2>
+	<input type="text" id="loginUsername" placeholder="Tên đăng nhập">
+	<input type="password" id="loginPassword" placeholder="Mật khẩu">
+	<button onclick="login()">Đăng nhập</button>
+	
+	<script>
+		async function register() {
+			let response = await fetch('http://localhost:8080/api/auth/register',{
+				method: 'POST',
+				headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify({
+					username: document.getElementById('registerUsername').value,
+					password: document.getElementById('registerPassword').value
+				})
+			});
+			let data = await response.text();
+			alert(data);
+		}
+		
+		async function login() {
+			let response = await fetch('http://localhost:8080/api/auth/login', {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify({
+					username: document.getElementById('loginUsername').value,
+					password: document.getElementById('loginPassword').value
+				})
+			});
+			let token = await response.text();
+			alert('Token: ' + token)
+		}
+	</script>
+</body>
+</html>
